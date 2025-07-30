@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>सामान्य ज्ञान क्विज</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+
+    .question {
+      font-weight: bold;
+      margin-top: 20px;
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .option {
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .option:hover:not(.selected) {
+      background-color: #f0f0f0;
+    }
+
+    .correct {
+      background-color: green !important;
+      color: white;
+    }
+
+    .wrong {
+      background-color: red !important;
+      color: white;
+    }
+
+    .report-card {
+      margin-top: 30px;
+      padding: 15px;
+      border-radius: 5px;
+      background: #e9ecef;
+    }
+
+    .report-card h2 {
+      margin: 0 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 सामान्य ज्ञान क्विज (20 प्रश्न)</h1>
+
+  <div id="quiz-container"></div>
+
+  <div class="report-card">
+    <h2>📊 आपका स्कोर:</h2>
+    <p>प्रश्न हल किए: <span id="attemptedCount">0</span></p>
+    <p>सही उत्तर: <span id="correctCount">0</span></p>
+    <p>गलत उत्तर: <span id="wrongCount">0</span></p>
+    <p>प्रतिशत: <span id="percentage">0%</span></p>
+  </div>
+
+  <script>
+    const questions = [
+  { q: "तिरंगा झंडा किसने डिजाइन किया?", options: ["गांधी", "सुभाष", "पिंगली वेंकैय्या", "राजगुरु"], correct: 2 },
+  { q: "भारत का पहला उपग्रह कौन सा था?", options: ["भास्कर", "आर्यभट्ट", "इंसैट", "रॉकेट"], correct: 1 },
+  { q: "दिल्ली का लाल किला किसने बनवाया?", options: ["अकबर", "बाबर", "शाहजहां", "औरंगजेब"], correct: 2 },
+  { q: "भारत की राष्ट्रीय नदी?", options: ["गंगा", "यमुना", "गोदावरी", "नर्मदा"], correct: 0 },
+  { q: "गांधी जी का पूरा नाम क्या था?", options: ["मोहनदास करमचंद गांधी", "महात्मा गांधी", "मोहन गांधी", "के.एम. गांधी"], correct: 0 },
+  { q: "स्वतंत्रता दिवस कब मनाया जाता है?", options: ["26 जनवरी", "15 अगस्त", "2 अक्टूबर", "14 नवंबर"], correct: 1 },
+  { q: "दुनिया का सबसे बड़ा महाद्वीप?", options: ["अफ्रीका", "एशिया", "यूरोप", "ऑस्ट्रेलिया"], correct: 1 },
+  { q: "गोलगप्पा को अंग्रेजी में क्या कहते हैं?", options: ["Pani Ball", "Spicy Ball", "Water Balls", "Water Pancakes"], correct: 3 },
+  { q: "ATM का पूरा नाम?", options: ["Any Time Money", "Automatic Teller Machine", "Auto Transfer Money", "Advance Teller Machine"], correct: 1 },
+  { q: "भारत के पहले उपग्रह का नाम?", options: ["आर्यभट्ट", "चंद्रयान", "मंगलयान", "इंसैट"], correct: 0 },
+  { q: "Who is the Missile Man of India?", options: ["कैलाश सत्यार्थी", "एपीजे अब्दुल कलाम", "विक्रम साराभाई", "सीवी रमण"], correct: 1 },
+  { q: "भारत की राष्ट्रीय मुद्रा?", options: ["डॉलर", "रुपया", "येन", "पेसो"], correct: 1 },
+  { q: "बिजली की खोज किसने की?", options: ["न्यूटन", "आइंस्टीन", "एडिसन", "बेंजामिन फ्रैंकलिन"], correct: 3 },
+  { q: "गांधी जी का जन्म स्थान?", options: ["साबरमती", "अहमदाबाद", "पोरबंदर", "दिल्ली"], correct: 2 },
+  { q: "कौन सी धातु तरल रूप में पाई जाती है?", options: ["सोडियम", "पारा", "लोहा", "जस्ता"], correct: 1 },
+  { q: "सबसे छोटा महाद्वीप?", options: ["एशिया", "ऑस्ट्रेलिया", "अंटार्कटिका", "यूरोप"], correct: 1 },
+  { q: "भारत का पहला परमाणु परीक्षण कहाँ हुआ?", options: ["लद्दाख", "पोकरण", "श्रीहरिकोटा", "तिरुवनंतपुरम"], correct: 1 },
+  { q: "भारत का उच्चतम जलप्रपात?", options: ["जोग", "दूधसागर", "बरेली", "शिवसमुद्रम"], correct: 0 },
+  { q: "हिंदी दिवस कब मनाया जाता है?", options: ["14 नवंबर", "15 अगस्त", "26 जनवरी", "14 सितंबर"], correct: 3 },
+  { q: "कौन सा ग्रह सबसे बड़ा है?", options: ["पृथ्वी", "मंगल", "बृहस्पति", "शुक्र"], correct: 2 }
+];
+
+
+
+
+    const quizContainer = document.getElementById('quiz-container');
+    let total = 0, correct = 0;
+    const attempted = new Set();
+
+    questions.forEach((q, i) => {
+      const qDiv = document.createElement('div');
+      qDiv.innerHTML = `<div class="question" id="q${i}">${i + 1}. ${q.q}</div>`;
+      q.options.forEach((opt, j) => {
+        const optDiv = document.createElement('div');
+        optDiv.className = 'option';
+        optDiv.textContent = String.fromCharCode(65 + j) + ') ' + opt;
+        optDiv.dataset.question = 'q' + i;
+        optDiv.dataset.index = j;
+        optDiv.addEventListener('click', () => handleClick(optDiv, q.correct));
+        qDiv.appendChild(optDiv);
+      });
+      quizContainer.appendChild(qDiv);
+    });
+
+    function handleClick(optionEl, correctIndex) {
+      const qId = optionEl.dataset.question;
+      if (attempted.has(qId)) return;
+
+      attempted.add(qId);
+      total++;
+
+      const selectedIndex = parseInt(optionEl.dataset.index);
+      const options = document.querySelectorAll(`.option[data-question="${qId}"]`);
+
+      options.forEach(opt => {
+        const optIndex = parseInt(opt.dataset.index);
+        opt.classList.remove('correct', 'wrong');
+        if (optIndex === correctIndex) {
+          opt.classList.add('correct'); // सही उत्तर को हरा दिखाएँ
+        }
+      });
+
+      if (selectedIndex !== correctIndex) {
+        optionEl.classList.add('wrong'); // गलत उत्तर को लाल दिखाएँ
+      } else {
+        correct++;
+      }
+
+      document.getElementById('attemptedCount').textContent = total;
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('wrongCount').textContent = total - correct;
+      document.getElementById('percentage').textContent = ((correct / total) * 100).toFixed(2) + '%';
+    }
+  </script>
+</body>
+</html>
