@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>सामान्य ज्ञान क्विज</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+
+    .question {
+      font-weight: bold;
+      margin-top: 20px;
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .option {
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .option:hover:not(.selected) {
+      background-color: #f0f0f0;
+    }
+
+    .correct {
+      background-color: green !important;
+      color: white;
+    }
+
+    .wrong {
+      background-color: red !important;
+      color: white;
+    }
+
+    .report-card {
+      margin-top: 30px;
+      padding: 15px;
+      border-radius: 5px;
+      background: #e9ecef;
+    }
+
+    .report-card h2 {
+      margin: 0 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 सामान्य ज्ञान क्विज (20 प्रश्न)</h1>
+
+  <div id="quiz-container"></div>
+
+  <div class="report-card">
+    <h2>📊 आपका स्कोर:</h2>
+    <p>प्रश्न हल किए: <span id="attemptedCount">0</span></p>
+    <p>सही उत्तर: <span id="correctCount">0</span></p>
+    <p>गलत उत्तर: <span id="wrongCount">0</span></p>
+    <p>प्रतिशत: <span id="percentage">0%</span></p>
+  </div>
+
+  <script>
+    const questions = [
+  { q: "भारत की राजधानी क्या है?", options: ["मुंबई", "दिल्ली", "कोलकाता", "चेन्नई"], correct: 1 },
+  { q: "ताजमहल कहाँ स्थित है?", options: ["दिल्ली", "आगरा", "जयपुर", "लखनऊ"], correct: 1 },
+  { q: "भारत के पहले प्रधानमंत्री कौन थे?", options: ["गांधी", "सुभाष", "नेहरू", "पटेल"], correct: 2 },
+  { q: "राष्ट्रीय पशु कौन है?", options: ["शेर", "बाघ", "हाथी", "नीलगाय"], correct: 1 },
+  { q: "कंप्यूटर का पिता किसे कहा जाता है?", options: ["चार्ल्स बैबेज", "बिल गेट्स", "एलन ट्यूरिंग", "स्टीव जॉब्स"], correct: 0 },
+  { q: "भारतीय संविधान कब लागू हुआ?", options: ["26 जनवरी 1950", "15 अगस्त 1947", "2 अक्टूबर 1947", "1 जनवरी 1950"], correct: 0 },
+  { q: "पृथ्वी सूर्य के चारों ओर कितने समय में घूमती है?", options: ["365 दिन", "30 दिन", "12 महीने", "6 महीने"], correct: 0 },
+  { q: "भारत का राष्ट्रीय खेल क्या है?", options: ["क्रिकेट", "कबड्डी", "हॉकी", "बैडमिंटन"], correct: 2 },
+  { q: "सबसे बड़ी हड्डी कौन सी है?", options: ["जांघ की", "रीढ़", "हाथ", "पैर"], correct: 0 },
+  { q: "भारत के प्रथम राष्ट्रपति कौन थे?", options: ["राजेंद्र प्रसाद", "नेहरू", "पटेल", "अंबेडकर"], correct: 0 },
+  { q: "माउंट एवरेस्ट किस देश में है?", options: ["भारत", "चीन", "नेपाल", "भूटान"], correct: 2 },
+  { q: "कौन-सा ग्रह 'लाल ग्रह' कहलाता है?", options: ["बुध", "मंगल", "शुक्र", "बृहस्पति"], correct: 1 },
+  { q: "UNO का मुख्यालय कहाँ है?", options: ["लंदन", "न्यूयॉर्क", "पेरिस", "जिनेवा"], correct: 1 },
+  { q: "भारत में कुल कितने राज्य हैं?", options: ["28", "29", "30", "27"], correct: 0 },
+  { q: "राष्ट्रीय पक्षी कौन सा है?", options: ["तोता", "मोर", "हंस", "कबूतर"], correct: 1 },
+  { q: "रेलवे जोन की संख्या कितनी है?", options: ["16", "17", "18", "19"], correct: 2 },
+  { q: "ISRO क्या है?", options: ["बैंक", "अंतरिक्ष एजेंसी", "रेल विभाग", "कंपनी"], correct: 1 },
+  { q: "महात्मा गांधी को 'महात्मा' किसने कहा?", options: ["नेहरू", "टैगोर", "पटेल", "बोस"], correct: 1 },
+  { q: "कंप्यूटर की बाइनरी संख्या होती है?", options: ["0 और 1", "1 और 2", "1 और 10", "0 और 10"], correct: 0 },
+  { q: "शून्य का आविष्कार किसने किया?", options: ["आर्यभट्ट", "चाणक्य", "वराहमिहिर", "भास्कराचार्य"], correct: 0 }
+];
+
+
+
+    const quizContainer = document.getElementById('quiz-container');
+    let total = 0, correct = 0;
+    const attempted = new Set();
+
+    questions.forEach((q, i) => {
+      const qDiv = document.createElement('div');
+      qDiv.innerHTML = `<div class="question" id="q${i}">${i + 1}. ${q.q}</div>`;
+      q.options.forEach((opt, j) => {
+        const optDiv = document.createElement('div');
+        optDiv.className = 'option';
+        optDiv.textContent = String.fromCharCode(65 + j) + ') ' + opt;
+        optDiv.dataset.question = 'q' + i;
+        optDiv.dataset.index = j;
+        optDiv.addEventListener('click', () => handleClick(optDiv, q.correct));
+        qDiv.appendChild(optDiv);
+      });
+      quizContainer.appendChild(qDiv);
+    });
+
+    function handleClick(optionEl, correctIndex) {
+      const qId = optionEl.dataset.question;
+      if (attempted.has(qId)) return;
+
+      attempted.add(qId);
+      total++;
+
+      const selectedIndex = parseInt(optionEl.dataset.index);
+      const options = document.querySelectorAll(`.option[data-question="${qId}"]`);
+
+      options.forEach(opt => {
+        const optIndex = parseInt(opt.dataset.index);
+        opt.classList.remove('correct', 'wrong');
+        if (optIndex === correctIndex) {
+          opt.classList.add('correct'); // सही उत्तर को हरा दिखाएँ
+        }
+      });
+
+      if (selectedIndex !== correctIndex) {
+        optionEl.classList.add('wrong'); // गलत उत्तर को लाल दिखाएँ
+      } else {
+        correct++;
+      }
+
+      document.getElementById('attemptedCount').textContent = total;
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('wrongCount').textContent = total - correct;
+      document.getElementById('percentage').textContent = ((correct / total) * 100).toFixed(2) + '%';
+    }
+  </script>
+</body>
+</html>
