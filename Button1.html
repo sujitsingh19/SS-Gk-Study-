@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -13,18 +14,7 @@
       text-align: center;
     }
 
-    .ads-banner {
-      width: 320px;
-      height: 50px;
-      background: #ddd;
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: #555;
-      border: 1px dashed #aaa;
-    }
+  
 
     h1 {
       color: #2c3e50;
@@ -35,6 +25,81 @@
     .button-container {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .quiz-button {
+      background-color: #0096FF;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .quiz-button:hover {
+      background-color: #059669;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin: 30px 0 10px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    @media (max-width: 500px) {
+      .quiz-button {
+        width: 100%;
+      }
+
+      .ads-banner {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Ad -->
+
+
+  <h1>🧠 SS Gk Study</h1>
+
+  <div class="button-container">
+    <a href="Gkquiz1.html" class="quiz-button">GK Quiz 1</a>
+    <a href="Gk2.html" class="quiz-button">GK Quiz 2</a>
+    <a href="Gk3.html" class="quiz-button">GK Quiz 3</a>
+    <a href="Gk4.html" class="quiz-button">GK Quiz 4</a>
+    <a href="Gk5.html" class="quiz-button">GK Quiz 5</a>
+
+<script type="text/javascript" src="//www.highperformanceformat.com/90cc9a175bcd75e91a5a0ad096cfbfbd/invoke.js"></script>
+    
+    <a href="#" class="quiz-button">GK Quiz 6</a>
+    <a href="#" class="quiz-button">GK Quiz 7</a>
+    <a href="#" class="quiz-button">GK Quiz 8</a>
+    <a href="#" class="quiz-button">GK Quiz 9</a>
+    <a href="#" class="quiz-button">GK Quiz 10</a>
+
+  </div>
+
+  <!-- Bottom Ad -->
+
+
+  <footer>&copy; 2026 SS Gk Study | All rights reserved.</footer>
+
+</body>
+</html>      flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
       padding: 20px;
